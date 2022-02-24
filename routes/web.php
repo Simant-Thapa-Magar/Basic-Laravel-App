@@ -18,17 +18,17 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::middleware(['isNotLoggedIn'])->group(function(){
-    Route::get('/login', [AdminController::class,'showLoginForm']);
-    Route::post('/login', [AdminController::class,'validateLogin'])->name('login');
+Route::group(['prefix' => 'login','middleware' => ['isNotLoggedIn']],function(){
+    Route::get('/', [AdminController::class,'showLoginForm']);
+    Route::post('/', [AdminController::class,'validateLogin'])->name('login');
 });
 
-Route::middleware(['isAdmin'])->group(function(){
-    Route::get('/dashboard',[AdminController::class,'showAdminDashboard']);
-    Route::get('/dashboard/customers/add',[AdminController::class,'showAdminCustomerForm']);
-    Route::post('/dashboard/customers/add',[AdminController::class,'createCustomer'])->name('admin-create-customer');
-    Route::get('/dashboard/customers/edit/{id}',[AdminController::class,'showAdminCustomerEditForm']);
-    Route::put('/dashboard/customers/edit/{id}',[AdminController::class,'updateCustomer'])->name('admin-update-customer');
-    Route::delete('/dashboard/customers/delete/{id}',[AdminController::class,'removeCustomer']);
-    Route::post('/dashboard/logout',[AdminController::class,'logoutAdmin']);
+Route::group(['prefix' => 'dashboard','middleware' => ['isAdmin']],function(){
+    Route::get('/',[AdminController::class,'showAdminDashboard']);
+    Route::get('/customers/add',[AdminController::class,'showAdminCustomerForm']);
+    Route::post('/customers/add',[AdminController::class,'createCustomer'])->name('admin-create-customer');
+    Route::get('/customers/edit/{id}',[AdminController::class,'showAdminCustomerEditForm']);
+    Route::put('/customers/edit/{id}',[AdminController::class,'updateCustomer'])->name('admin-update-customer');
+    Route::delete('/customers/delete/{id}',[AdminController::class,'removeCustomer']);
+    Route::post('/logout',[AdminController::class,'logoutAdmin']);
 });
