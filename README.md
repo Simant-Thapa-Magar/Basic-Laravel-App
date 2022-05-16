@@ -17,7 +17,7 @@ This is a basic laravel application to demonstrate use of
     <li>
     CRUD Operations
     </li>
-</ul>>
+</ul>
 in a laravel project
 </p>
 <strong>Run migration and seeder files before running the application</strong>
